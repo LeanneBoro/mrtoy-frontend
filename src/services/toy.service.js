@@ -9,7 +9,8 @@ export const toyService = {
     getById,
     save,
     remove,
-    getDefaultFilter
+    getDefaultFilter,
+    getEmptyToy
 }
 
 function query(filterBy = {}) {
@@ -30,14 +31,19 @@ function save(toy) {
     if (toy._id) {
         return storageService.put(STORAGE_KEY, toy)
     } else {
+        toy = _createToy(toy.name,toy.price)
         return storageService.post(STORAGE_KEY, toy)
     }
 }
 
-
 function getDefaultFilter() {
-    return { txt: '', maxPrice: '' }
+    return { name: '', maxPrice: '', inStock: 'all', label: '' }
 }
+
+function getEmptyToy() {
+    return {name : '', price : 0 , createdAt: Date.now(), inStock : true}
+}
+
 
 const labels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle',
     'Outdoor', 'Battery Powered']
@@ -49,6 +55,14 @@ const toy = {
     labels: ['Doll', 'Battery Powered', 'Baby'],
     createdAt: 1631031801011,
     inStock: true,
+}
+
+function _createToy(name, price) {
+    const note = getEmptyToy()
+    note.id = utilService.makeId()
+    note.name = name
+    note.price = price
+    return note
 }
 
 storageService.post(STORAGE_KEY, toy)
