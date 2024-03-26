@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { useEffect } from 'react'
 
-import { loadToys, removeToy, saveToy, setFilterBy } from '../store/actions/car.actions.js'
+import { loadToys, removeToy, saveToy, setFilterBy } from '../store/actions/toy.actions.js'
 
 import { ToyList } from "../cmps/ToyList.jsx"
 
@@ -12,8 +12,8 @@ export function ToyIndex() {
 
     const dispatch = useDispatch()
     const toys = useSelector(storeState => storeState.toyModule.toys)
-    const filterBy = useSelector(storeState => storeState.carModule.filterBy)
-    const isLoading = useSelector(storeState => storeState.carModule.isLoading)
+    const filterBy = useSelector(storeState => storeState.toyModule.filterBy)
+    const isLoading = useSelector(storeState => storeState.toyModule.isLoading)
 
 
     useEffect(() => {
@@ -43,7 +43,7 @@ export function ToyIndex() {
 
         saveToy(toyToSave)
             .then((savedToy) => {
-                console.log(`Car updated to price: $${savedToy.price}`)
+                console.log(`Toy updated to price: $${savedToy.price}`)
             })
             .catch(err => {
                 console.log('Cannot update toy')
@@ -52,7 +52,7 @@ export function ToyIndex() {
 
     return (
         <div>
-            <h3>Cars App</h3>
+            <h3>Toy App</h3>
             <main>
                 <Link to="/toy/edit">Add Toy</Link>
                 {/* <CarFilter filterBy={filterBy} onSetFilter={onSetFilter} /> */}

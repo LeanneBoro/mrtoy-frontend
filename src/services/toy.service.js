@@ -21,10 +21,10 @@ function query(filterBy = {}) {
 }
 
 function getById(toyId) {
-    return storageService.get(STORAGE_KEY + toyId)
+    return storageService.get(STORAGE_KEY,toyId)
 }
 function remove(toyId) {
-    return storageService.remove(STORAGE_KEY + toyId)
+    return storageService.remove(STORAGE_KEY,toyId)
 }
 
 function save(toy) {
@@ -65,4 +65,4 @@ function _createToy(name, price) {
     return note
 }
 
-storageService.post(STORAGE_KEY, toy)
+// storageService.post(STORAGE_KEY, toy)

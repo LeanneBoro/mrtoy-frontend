@@ -35,12 +35,11 @@ export function ToyEdit() {
         if (!toyToEdit.price) toyToEdit.price = 1000
         saveToy(toyToEdit)
             .then(() => {
-                showSuccessMsg('toy Saved!')
+                console.log('toy Saved!')
                 navigate('/toy')
             })
             .catch(err => {
                 console.log('Had issues in toy details', err)
-                showErrorMsg('Had issues in toy details')
             })
     }
 
