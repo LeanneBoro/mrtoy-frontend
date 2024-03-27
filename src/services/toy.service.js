@@ -1,5 +1,6 @@
-import { storageService } from '../services/async-storage.service.js'
 import { utilService } from '../services/util.service.js'
+import {httpService} from '../services/http.service.js'
+
 
 // const BASE_URL = 'car/'
 const STORAGE_KEY = 'toyDB'
@@ -9,60 +10,60 @@ export const toyService = {
     getById,
     save,
     remove,
-    getDefaultFilter,
+    getDefaultFilterBy,
+    getLabels,
     getEmptyToy
 }
 
-function query(filterBy = {}) {
-    return storageService.query(STORAGE_KEY)
-        .then(toys => {
-            return toys
-        })
+
+function query(filterBy, sort) {
+    return httpService.get('toy', { params: { filterBy, sort } })
+}
+
+function getLabels() {
+    return [...labels]
 }
 
 function getById(toyId) {
-    return storageService.get(STORAGE_KEY,toyId)
+    return httpService.get(`toy/${toyId}`)
 }
+
 function remove(toyId) {
-    return storageService.remove(STORAGE_KEY,toyId)
+    return httpService.delete(`toy/${toyId}`)
 }
 
 function save(toy) {
     if (toy._id) {
-        return storageService.put(STORAGE_KEY, toy)
+        return httpService.put(`toy/${toy._id}`, toy)
     } else {
-        toy = _createToy(toy.name,toy.price)
-        return storageService.post(STORAGE_KEY, toy)
+        return httpService.post('toy', toy)
     }
 }
 
-function getDefaultFilter() {
-    return { name: '', maxPrice: '', inStock: 'all', label: '' }
-}
-
 function getEmptyToy() {
-    return {name : '', price : 0 , createdAt: Date.now(), inStock : true}
+    return {
+        name: '',
+        price: '',
+        labels: [],
+        inStock: 'true'
+    }
 }
 
-
-const labels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle',
-    'Outdoor', 'Battery Powered']
-
-const toy = {
-    _id: 't101',
-    name: 'Talking Doll',
-    price: 123,
-    labels: ['Doll', 'Battery Powered', 'Baby'],
-    createdAt: 1631031801011,
-    inStock: true,
+function getDefaultFilterBy() {
+    return {
+        txt: '',
+        maxPrice: Infinity,
+        labels: [],
+        inStock: null
+    }
 }
 
-function _createToy(name, price) {
-    const note = getEmptyToy()
-    note.id = utilService.makeId()
-    note.name = name
-    note.price = price
-    return note
+function getDefaultSort() {
+    return {
+        // 
+        by: 'name',
+        asc: true
+    }
 }
 
 // storageService.post(STORAGE_KEY, toy)
