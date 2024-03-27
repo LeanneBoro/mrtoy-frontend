@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { useEffect } from 'react'
 
-import { loadToys, removeToy, saveToy, setFilterBy } from '../store/actions/toy.actions.js'
+import { loadToys, removeToy, saveToy, setFilterBy, setSortBy } from '../store/actions/toy.actions.js'
 
 import { ToyList } from "../cmps/ToyList.jsx"
+import {ToyFilter} from "../cmps/ToyFilter.jsx"
 import { ToySort } from '../cmps/ToySort.jsx'
 
 
@@ -52,13 +53,18 @@ export function ToyIndex() {
             })
     }
 
+    function onSetSort(sort) {
+        setSortBy(sort)
+    }
+
     return (
         <div>
             <h3>Toy App</h3>
             <main>
+                <h1>bitch who the fuck</h1>
                 <Link to="/toy/edit">Add Toy</Link>
-                <ToyFilter filterBy={filterBy} onSetFilter={onSetFilter} />
-                <ToySort/>
+                { <ToyFilter filterBy={filterBy} onSetFilter={onSetFilter} /> }
+                {<ToySort sortBy={sortBy} onSetSort={onSetSort} />}
                 {!isLoading
                     ? <ToyList toys={toys} onRemoveToy={onRemoveToy} onEditToy={onEditToy}
                     /> : <div>Loading...</div>}

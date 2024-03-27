@@ -16,6 +16,7 @@ export const toyService = {
     getDefaultSort
 }
 
+const labels = ["On wheels", "Box game", "Art", "Baby", "Doll", "Puzzle", "Outdoor", "Battery Powered"]
 
 function query(filterBy, sort) {
     return httpService.get('toy', { params: { filterBy, sort } })
@@ -61,7 +62,6 @@ function getDefaultFilterBy() {
 
 function getDefaultSort() {
     return {
-        // 
         by: 'name',
         asc: true
     }

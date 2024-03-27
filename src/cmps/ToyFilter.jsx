@@ -2,7 +2,6 @@
 import { useEffect, useRef, useState } from "react"
 import { utilService } from "../services/util.service.js"
 import { toyService } from "../services/toy.service.js"
-import { useEffectUpdate } from "../customHooks/useEffectUpdate.js"
 
 const toyLabel = toyService.getLabels()
 
@@ -11,8 +10,8 @@ export function ToyFilter({ filterBy, onSetFilter }) {
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
     onSetFilter = useRef(utilService.debounce(onSetFilter, 300))
 
-    useEffectUpdate(() => {
-        onSetFilter.current(filterByToEdit)
+    useEffect(() => {
+        onSetFilter(filterByToEdit)
     }, [filterByToEdit])
 
     function handleChange({ target }) {
