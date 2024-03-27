@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 import { loadToys, removeToy, saveToy, setFilterBy } from '../store/actions/toy.actions.js'
 
 import { ToyList } from "../cmps/ToyList.jsx"
+import { ToySort } from '../cmps/ToySort.jsx'
 
 
 export function ToyIndex() {
@@ -13,6 +14,7 @@ export function ToyIndex() {
     const dispatch = useDispatch()
     const toys = useSelector(storeState => storeState.toyModule.toys)
     const filterBy = useSelector(storeState => storeState.toyModule.filterBy)
+    const sortBy = useSelector(state => state.toyModule.sortBy)
     const isLoading = useSelector(storeState => storeState.toyModule.isLoading)
 
 
@@ -55,7 +57,8 @@ export function ToyIndex() {
             <h3>Toy App</h3>
             <main>
                 <Link to="/toy/edit">Add Toy</Link>
-                {/* <CarFilter filterBy={filterBy} onSetFilter={onSetFilter} /> */}
+                <ToyFilter filterBy={filterBy} onSetFilter={onSetFilter} />
+                <ToySort/>
                 {!isLoading
                     ? <ToyList toys={toys} onRemoveToy={onRemoveToy} onEditToy={onEditToy}
                     /> : <div>Loading...</div>}

@@ -12,7 +12,8 @@ export const toyService = {
     remove,
     getDefaultFilterBy,
     getLabels,
-    getEmptyToy
+    getEmptyToy,
+    getDefaultSort
 }
 
 

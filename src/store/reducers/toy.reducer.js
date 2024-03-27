@@ -4,6 +4,7 @@ const initialState = {
     toys: [],
     isLoading: false,
     filterBy: toyService.getDefaultFilter(),
+    sortBy: toyService.getDefaultSort()
 }
 
 export const SET_TOYS = 'SET_TOYS'
@@ -14,6 +15,7 @@ export const UPDATE_TOY = 'UPDATE_TOY'
 
 export const SET_FILTER_BY = 'SET_FILTER_BY'
 export const SET_IS_LOADING = 'SET_IS_LOADING'
+export const SET_SORTBY = 'SET_SORTBY'
 
 export function toyReducer(state = initialState, action = {}) {
     switch (action.type) {

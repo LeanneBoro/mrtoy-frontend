@@ -1,5 +1,5 @@
 import { toyService } from "../../services/toy.service.js"
-import { ADD_TOY, REMOVE_TOY, SET_TOYS, SET_FILTER_BY, SET_IS_LOADING, UPDATE_TOY } from "../reducers/toy.reducer.js"
+import { ADD_TOY, REMOVE_TOY, SET_TOYS, SET_FILTER_BY, SET_IS_LOADING, UPDATE_TOY ,SET_SORTBY } from "../reducers/toy.reducer.js"
 import { store } from "../store.js"
 
 
@@ -45,4 +45,8 @@ export function saveToy(toy) {
 
 export function setFilterBy(filterBy) {
     store.dispatch({ type: SET_FILTER_BY, filterBy })
+}
+
+export function setSortBy(sortBy) {
+    store.dispatch({ type: SET_SORTBY, sortBy })
 }

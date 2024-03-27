@@ -1,9 +1,10 @@
 
 import { useEffect, useRef, useState } from "react"
 import { utilService } from "../services/util.service.js"
+import { toyService } from "../services/toy.service.js"
 import { useEffectUpdate } from "../customHooks/useEffectUpdate.js"
 
-
+const toyLabel = toyService.getLabels()
 
 export function ToyFilter({ filterBy, onSetFilter }) {
 
@@ -15,43 +16,70 @@ export function ToyFilter({ filterBy, onSetFilter }) {
     }, [filterByToEdit])
 
     function handleChange({ target }) {
-        let { value, name: field, type } = target
-        value = type === 'number' ? +value : value
-        setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }))
+        let { value, type, name: field } = target
+        if (type === 'checkbox') value = target.checked
+        setFilterByToEdit(prevFilterBy => ({ ...prevFilterBy, [field]: value }))
     }
 
-    return (
-        <section className="toy-filter">
-            <h2>Toys Filter</h2>
-            <form >
-                <label htmlFor="name">Name:</label>
-                <input type="text"
-                    id="name"
-                    name="name"
-                    placeholder="By name"
-                    value={filterByToEdit.name}
+    function onSelectLabels(ev) {
+        const label = ev.target.value
+        let filter = { ...filterByToEdit }
+        if (filter.labels.includes(label)) filter.labels = filter.labels.filter(l => l !== label)
+        else filter.labels.push(label)
+        setFilterByToEdit(filter)
+    }
+
+    return  <div className="filter-container">
+        <form className={'form-filter'}>
+            <label className='filter-label'>
+                <span className='filter-label'>Search</span>
+                <input
+                    value={filterByToEdit.search}
                     onChange={handleChange}
-                />
-
-                <label htmlFor="maxPrice">Max price:</label>
-                <input type="number"
-                    id="maxPrice"
-                    name="maxPrice"
-                    placeholder="By max price"
-                    value={filterByToEdit.maxPrice || ''}
+                    type="search"
+                    className="search-input"
+                    name="txt" />
+            </label>
+            <label className='filter-label'>
+                <span className='filter-label'>Min-price</span>
+                <input
                     onChange={handleChange}
-                />
-
-                <label htmlFor="stock">
-                    <select id="stock" htmlFor="stock" name="stock" onChange={handleChange}>
-                        <option value="all">All</option>
-                        <option value="in">In stock</option>
-                        <option value="not">Not in stock</option>
-                    </select>
-                </label>
-
-            </form>
-
-        </section>
-    )
+                    type="number"
+                    className="min-price"
+                    name="minPrice" />
+            </label>
+            <label className='filter-label'>
+                <span className='filter-label'>Max-price</span>
+                <input
+                    onChange={handleChange}
+                    type="number"
+                    className="max-price"
+                    name="maxPrice" />
+            </label>
+            <label className='filter-label'>
+                <span className='filter-label'>Filter By</span>
+                <select
+                    onChange={onSelectLabels}
+                    name="labels"
+                    multiple
+                    value={filterByToEdit.labels || []}>
+                    <option value=""> All </option>
+                    <>
+                        {toyLabel.map(label => <option key={label} value={label}>{label}</option>)}
+                    </>
+                </select>
+            </label>
+            <label className='filter-label'>
+                <span className='filter-label'>In stock</span>
+                <select
+                    onChange={handleChange}
+                    name="inStock"
+                    value={filterByToEdit.inStock || ''}>
+                    <option value=""> All </option>
+                    <option value={true}>In stock</option>
+                    <option value={false}>Out of stock</option>
+                </select>
+            </label>
+        </form>
+    </div>
 }
