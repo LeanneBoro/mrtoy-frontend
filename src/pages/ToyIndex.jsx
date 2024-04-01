@@ -8,11 +8,11 @@ import { loadToys, removeToy, saveToy, setFilterBy, setSortBy } from '../store/a
 import { ToyList } from "../cmps/ToyList.jsx"
 import {ToyFilter} from "../cmps/ToyFilter.jsx"
 import { ToySort } from '../cmps/ToySort.jsx'
-
+import { LoginSignup } from '../cmps/LoginSignup.jsx'
 
 export function ToyIndex() {
 
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     const toys = useSelector(storeState => storeState.toyModule.toys)
     const filterBy = useSelector(storeState => storeState.toyModule.filterBy)
     const sortBy = useSelector(state => state.toyModule.sortBy)
@@ -28,7 +28,7 @@ export function ToyIndex() {
     }, [filterBy])
 
     function onSetFilter(filterBy) {
-        console.log('hii')
+        console.log(filterBy)
         setFilterBy(filterBy)
     }
 
@@ -62,6 +62,7 @@ export function ToyIndex() {
     return (
         <div>
             <h3>Toy App</h3>
+            <LoginSignup/>
             <main>
                 <Link to="/toy/edit">Add Toy</Link>
                 { <ToyFilter filterBy={filterBy} onSetFilter={onSetFilter} /> }

@@ -18,31 +18,29 @@ export async function loadToys() {
     }
 }
 
-export function removeToy(toyId) {
-    return toyService.remove(toyId)
-        .then(() => {
-            store.dispatch({ type: REMOVE_TOY, toyId })
-        })
-        .catch(err => {
-            console.log('toy action -> Cannot remove toy', err)
-            throw err
-        })
+export async function removeToy(toyId) {
+    try {
+        await toyService.remove(toyId)
+        store.dispatch({ type: REMOVE_TOY, toyId })
+    } catch (error) {
+        console.log('toy action -> Cannot remove toy', err)
+        throw err
+    }
 }
 
-export function saveToy(toy) {
-    const type = toy._id ? UPDATE_TOY : ADD_TOY
-    return toyService.save(toy)
-        .then(savedToy => {
-            store.dispatch({ type, toy: savedToy })
-            return savedToy
-        })
-        .catch(err => {
-            console.log('toy action -> Cannot save toy', err)
-            throw err
-        })
+export async function saveToy(toyToSave) {
+    const type = toyToSave._id ? UPDATE_TOY : ADD_TOY
+    try {
+        const toy = await toyService.save(toyToSave)
+        store.dispatch({ type, toy })
+        return toy
+    } catch (err) {
+        console.log('toy action -> Cannot save toy', err)
+        throw err
+    }
 }
-
 export function setFilterBy(filterBy) {
+    console.log(filterBy)
     store.dispatch({ type: SET_FILTER_BY, filterBy })
 }
 

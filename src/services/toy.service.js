@@ -1,7 +1,7 @@
 import { utilService } from '../services/util.service.js'
 import {httpService} from '../services/http.service.js'
 
-
+const BASE_URL = 'toy/'
 // const BASE_URL = 'car/'
 const STORAGE_KEY = 'toyDB'
 
@@ -19,7 +19,7 @@ export const toyService = {
 const labels = ["On wheels", "Box game", "Art", "Baby", "Doll", "Puzzle", "Outdoor", "Battery Powered"]
 
 function query(filterBy, sort) {
-    return httpService.get('toy', { params: { filterBy, sort } })
+    return httpService.get(BASE_URL, filterBy)
 }
 
 function getLabels() {
