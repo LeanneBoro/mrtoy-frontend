@@ -3,20 +3,19 @@ import { ADD_TOY, REMOVE_TOY, SET_TOYS, SET_FILTER_BY, SET_IS_LOADING, UPDATE_TO
 import { store } from "../store.js"
 
 
-export function loadToys() {
-    const filterBy = store.getState().toyModule.filterBy
+export async function loadToys() {
     store.dispatch({ type: SET_IS_LOADING, isLoading: true })
-    return toyService.query(filterBy)
-        .then(toys => {
-            store.dispatch({ type: SET_TOYS, toys })
-        })
-        .catch(err => {
-            console.log('toy action -> Cannot load toys', err)
-            throw err
-        })
-        .finally(() => {
-            store.dispatch({ type: SET_IS_LOADING, isLoading: false })
-        })
+    try {
+        const filterBy = store.getState().toyModule.filterBy
+        const toys = await toyService.query(filterBy)
+        store.dispatch({ type: SET_TOYS, toys })
+        return toys
+    } catch (err) {
+        console.log('toy action -> Cannot load toys', err)
+        throw err
+    } finally {
+        store.dispatch({ type: SET_IS_LOADING, isLoading: false })
+    }
 }
 
 export function removeToy(toyId) {

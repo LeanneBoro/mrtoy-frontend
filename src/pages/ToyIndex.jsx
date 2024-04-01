@@ -23,10 +23,12 @@ export function ToyIndex() {
         loadToys()
             .catch(err => {
                 console.log('Cannot load toys!')
+                console.log(toys)
             })
     }, [filterBy])
 
     function onSetFilter(filterBy) {
+        console.log('hii')
         setFilterBy(filterBy)
     }
 
@@ -61,7 +63,6 @@ export function ToyIndex() {
         <div>
             <h3>Toy App</h3>
             <main>
-                <h1>bitch who the fuck</h1>
                 <Link to="/toy/edit">Add Toy</Link>
                 { <ToyFilter filterBy={filterBy} onSetFilter={onSetFilter} /> }
                 {<ToySort sortBy={sortBy} onSetSort={onSetSort} />}

@@ -8,7 +8,7 @@ const toyLabel = toyService.getLabels()
 export function ToyFilter({ filterBy, onSetFilter }) {
 
     const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
-    onSetFilter = useRef(utilService.debounce(onSetFilter, 300))
+    // onSetFilter = useRef(utilService.debounce(onSetFilter, 300))
 
     useEffect(() => {
         onSetFilter(filterByToEdit)
@@ -29,6 +29,7 @@ export function ToyFilter({ filterBy, onSetFilter }) {
     }
 
     return  <div className="filter-container">
+        <h1>i am a filter</h1>
         <form className={'form-filter'}>
             <label className='filter-label'>
                 <span className='filter-label'>Search</span>
