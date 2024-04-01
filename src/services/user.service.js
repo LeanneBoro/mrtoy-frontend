@@ -21,6 +21,7 @@ async function login({ username, password }) {
 
 async function signup({ username, password, fullname }) {
     const user = { username, password, fullname, score: 10000 }
+    console.log(user)
     const savedUser = httpService.post(BASE_URL + 'signup', user)
     if (savedUser) return _setLoggedinUser(savedUser)
 }
